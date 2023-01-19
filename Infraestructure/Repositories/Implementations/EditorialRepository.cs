@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<IList<Editorial>> findAll()
+        public async Task<IList<Editorial>> FindAll()
        => await _context.Editoriales.OrderByDescending(e=>e.Id).ToListAsync();
     }
 }
