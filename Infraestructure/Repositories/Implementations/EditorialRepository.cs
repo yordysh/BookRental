@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Implementations
 {
-    public class EditorialRepository : IEditorialRespository
+    public class EditorialRepository : IEditorialRepository
     {
         private readonly ApplicationDbContext _context;
         public EditorialRepository(ApplicationDbContext context)

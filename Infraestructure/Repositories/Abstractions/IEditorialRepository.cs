@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Abstractions
 {
-    public interface IEditorialRespository
+    public interface IEditorialRepository
     {
         Task<IList<Editorial>> FindAll();
     }
