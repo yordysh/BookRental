@@ -17,6 +17,27 @@ namespace Application.Services.Implementations
             _editorialRepository = editorialRepository;
         }
 
+        public Task<Editorial> Create(Editorial entity)
+        {
+           
+            throw new NotImplementedException();
+        }
+
+        public Task<Editorial> Edit(int id, Editorial entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Editorial> EnableOrDisable(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Editorial> Find(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<EditorialDto>> FindAll()
         {
             var response = await _editorialRepository.FindAll();
