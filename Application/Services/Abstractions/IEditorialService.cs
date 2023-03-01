@@ -10,10 +10,10 @@ namespace Application.Services.Abstractions
 {
     public interface IEditorialService
     {
-        Task<Editorial> Create(Editorial entity);
-        Task<Editorial> Edit(int id, Editorial entity);
-        Task<Editorial> EnableOrDisable(int id);
-        Task<Editorial> Find(int id);
+        Task<EditorialDto> Create(EditorialFormDto dto);
+        Task<EditorialDto> Edit(int id, EditorialFormDto dto);
+        Task<EditorialDto> EnableOrDisable(int id);
+        Task<EditorialDto> Find(int id);
         Task<IList<EditorialDto>> FindAll();
     }
 }

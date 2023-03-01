@@ -17,25 +17,30 @@ namespace Application.Services.Implementations
             _editorialRepository = editorialRepository;
         }
 
-        public Task<Editorial> Create(Editorial entity)
+        public async Task<EditorialDto> Create(EditorialFormDto dto)
         {
-           
-            throw new NotImplementedException();
+            var entity = _mapper.Map<Editorial>(dto);
+            var response = await _editorialRepository.Create(entity);
+            return _mapper.Map<EditorialDto>(response);
         }
 
-        public Task<Editorial> Edit(int id, Editorial entity)
+        public async Task<EditorialDto> Edit(int id, EditorialFormDto dto)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<Editorial>(dto);
+            var response = await _editorialRepository.Edit(id,entity);
+            return _mapper.Map<EditorialDto>(response);
         }
 
-        public Task<Editorial> EnableOrDisable(int id)
+        public async Task<EditorialDto> EnableOrDisable(int id)
         {
-            throw new NotImplementedException();
+            var response = await _editorialRepository.EnableOrDisable(id);
+            return _mapper.Map<EditorialDto>(response);
         }
 
-        public Task<Editorial> Find(int id)
+        public async Task<EditorialDto> Find(int id)
         {
-            throw new NotImplementedException();
+            var response = await _editorialRepository.Find(id);
+            return _mapper.Map<EditorialDto>(response);
         }
 
         public async Task<IList<EditorialDto>> FindAll()
