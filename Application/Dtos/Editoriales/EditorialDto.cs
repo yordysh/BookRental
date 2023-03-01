@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos.Editoriales
 {
-    public class EditorialDto : EditorialFormDto
+    public class EditorialDto 
     {
         public int Id { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
         public DateTime FechaRegistro { get; set; }
         public int Estado { get; set; }
     }

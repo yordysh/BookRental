@@ -12,7 +12,7 @@ namespace Application.Dtos.Editoriales.Maps
     {
         public EditorialFormProfile()
         {
-            CreateMap<Editorial, EditorialFormDto>();
+            CreateMap< EditorialFormDto, Editorial>();
         }
     }
 }
