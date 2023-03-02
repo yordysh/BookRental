@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Infrastructure.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Abstractions
 {
-    public interface IEditorialRepository
+    public interface IEditorialRepository : IRepositoryBase<Editorial,int>
     {
-        Task<Editorial> Create(Editorial entity);
-        Task<Editorial?> Edit(int id, Editorial entity);
-        Task<Editorial?> EnableOrDisable(int id);
-        Task<Editorial?> Find(int id);
-        Task<IList<Editorial>> FindAll();
+        //Task<Editorial> Create(Editorial entity);
+        //Task<Editorial?> Edit(int id, Editorial entity);
+        //Task<Editorial?> EnableOrDisable(int id);
+        //Task<Editorial?> Find(int id);
+        //Task<IList<Editorial>> FindAll();
     }
 }
