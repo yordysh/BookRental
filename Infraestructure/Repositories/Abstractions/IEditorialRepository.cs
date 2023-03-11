@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Abstractions
 {
-    public interface IEditorialRepository : IRepositoryBase<Editorial,int>
+    public interface IEditorialRepository : IRepositoryCrud<Editorial,int>
     {
         //Task<Editorial> Create(Editorial entity);
         //Task<Editorial?> Edit(int id, Editorial entity);

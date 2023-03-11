@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Base
 {
-    internal interface IRepositoryEditable
+    public interface IRepositoryEditable<T, K>
     {
+        Task<T?> Edit(K id, T entity);
+        Task<T?> EnableOrDisable(K id);
     }
 }
