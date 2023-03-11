@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos.Libros.Maps
 {
-    internal class LibroFormProfile
+    public class LibroFormProfile : Profile
     {
+        public LibroFormProfile()
+        {
+            CreateMap<LibroFormDto, Libro>();
+        }
     }
 }
