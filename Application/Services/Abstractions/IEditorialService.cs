@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Abstractions
 {
-    public interface IEditorialService : IServiceBase<EditorialDto,EditorialFormDto,int>
+    public interface IEditorialService : IServiceBase<EditorialDto,EditorialFormDto,int> , IServicePaginated<EditorialDto>
     {
         //Task<EditorialDto> Create(EditorialFormDto dto);
         //Task<EditorialDto?> Edit(int id, EditorialFormDto dto);
