@@ -7,5 +7,6 @@
         public string Nombre { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
         public int Estado { get; set; } = 1;
+        public virtual IList<Libro> Libros { get; set; }
     }
 }
