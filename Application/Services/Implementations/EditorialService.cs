@@ -3,6 +3,7 @@ using Application.Services.Abstractions;
 using AutoMapper;
 using Domain;
 using Infrastructure.Repositories.Abstractions;
+using Utils.Paginations;
 
 namespace Application.Services.Implementations
 {
@@ -21,25 +22,29 @@ namespace Application.Services.Implementations
         {
             var entity = _mapper.Map<Editorial>(dto);
             var response = await _editorialRepository.Create(entity);
+
             return _mapper.Map<EditorialDto>(response);
         }
 
         public async Task<EditorialDto?> Edit(int id, EditorialFormDto dto)
         {
             var entity = _mapper.Map<Editorial>(dto);
-            var response = await _editorialRepository.Edit(id,entity);
+            var response = await _editorialRepository.Edit(id, entity);
+
             return _mapper.Map<EditorialDto>(response);
         }
 
         public async Task<EditorialDto?> EnableOrDisable(int id)
         {
             var response = await _editorialRepository.EnableOrDisable(id);
+
             return _mapper.Map<EditorialDto>(response);
         }
 
         public async Task<EditorialDto?> Find(int id)
         {
             var response = await _editorialRepository.Find(id);
+
             return _mapper.Map<EditorialDto>(response);
         }
 
@@ -49,5 +54,14 @@ namespace Application.Services.Implementations
 
             return _mapper.Map<IList<EditorialDto>>(response);
         }
+
+        public async Task<ResponsePagination<EditorialDto>> PaginatedSearch(RequestPagination<EditorialDto> dto)
+        {
+            var entity = _mapper.Map<RequestPagination<Editorial>>(dto);
+            var response = await _editorialRepository.PaginatedSearch(entity);
+
+            return _mapper.Map<ResponsePagination<EditorialDto>>(response);
+        }
     }
+
 }

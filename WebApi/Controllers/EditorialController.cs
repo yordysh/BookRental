@@ -4,14 +4,15 @@ using Application.Services.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Utils.Paginations;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class EditorialController : Controller
     {
         private readonly IEditorialService _editorialService;
+
         public EditorialController(IEditorialService editorialService)
         {
             _editorialService = editorialService;
@@ -19,7 +20,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<EditorialDto>> Get()
-            => await _editorialService.FindAll();
+        => await _editorialService.FindAll();
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditorialDto))]
@@ -27,7 +28,9 @@ namespace WebApi.Controllers
         public async Task<Results<NotFound, Ok<EditorialDto>>> Get(int id)
         {
             var response = await _editorialService.Find(id);
+
             if (response == null) return TypedResults.NotFound();
+
             return TypedResults.Ok(response);
         }
 
@@ -37,7 +40,9 @@ namespace WebApi.Controllers
         public async Task<Results<BadRequest, Ok<EditorialDto>>> Post([FromBody] EditorialFormDto request)
         {
             var response = await _editorialService.Create(request);
+
             if (response == null) return TypedResults.BadRequest();
+
             return TypedResults.Ok(response);
         }
 
@@ -48,7 +53,9 @@ namespace WebApi.Controllers
         public async Task<Results<BadRequest, NotFound, Ok<EditorialDto>>> Put(int id, [FromBody] EditorialFormDto request)
         {
             var response = await _editorialService.Edit(id, request);
+
             if (response == null) return TypedResults.NotFound();
+
             return TypedResults.Ok(response);
         }
 
@@ -58,8 +65,16 @@ namespace WebApi.Controllers
         public async Task<Results<NotFound, Ok<EditorialDto>>> Delete(int id)
         {
             var response = await _editorialService.EnableOrDisable(id);
+
             if (response == null) return TypedResults.NotFound();
+
             return TypedResults.Ok(response);
         }
+
+        [HttpGet("PaginatedSearch")]
+        public async Task<ResponsePagination<EditorialDto>> PaginatedSearch([FromQuery] RequestPagination<EditorialDto> request)
+        => await _editorialService.PaginatedSearch(request);
+
     }
+
 }

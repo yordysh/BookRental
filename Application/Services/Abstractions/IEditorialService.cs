@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Abstractions
 {
-    public interface IEditorialService : IServiceBase<EditorialDto,EditorialFormDto,int> , IServicePaginated<EditorialDto>
+    public interface IEditorialService : IServiceBase<EditorialDto, EditorialFormDto, int>, IServicePaginated<EditorialDto>
     {
-        //Task<EditorialDto> Create(EditorialFormDto dto);
-        //Task<EditorialDto?> Edit(int id, EditorialFormDto dto);
-        //Task<EditorialDto?> EnableOrDisable(int id);
-        //Task<EditorialDto?> Find(int id);
-        //Task<IList<EditorialDto>> FindAll();
     }
+    //Task<EditorialDto> Create(EditorialFormDto dto);
+    //Task<EditorialDto?> Edit(int id, EditorialFormDto dto);
+    //Task<EditorialDto?> EnableOrDisable(int id);
+    //Task<EditorialDto?> Find(int id);
+    //Task<IList<EditorialDto>> FindAll();
+
 }

@@ -6,6 +6,8 @@ using Infrastructure.Repositories.Implementations;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
+using Infrastructure.Core.Paginations.Abstractions;
+using Infrastructure.Core.Paginations.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,11 +28,12 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 //DI
- // builder.Services.AddScoped<IEditorialRepository, EditorialRepository>();
+// builder.Services.AddScoped<IEditorialRepository, EditorialRepository>();
 
- // builder.Services.AddScoped<IEditorialService, EditorialService>();
+// builder.Services.AddScoped<IEditorialService, EditorialService>();
 
- // builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+// builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped(typeof(IPaginator<>), typeof(Paginator<>));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(options =>
