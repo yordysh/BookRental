@@ -20,12 +20,16 @@ namespace Infrastructure.Context
 
         public DbSet<Editorial> Editoriales { get; set; }
         public DbSet<Libro> Libros { get; set; }
+        public DbSet<Prestamo> Prestamos { get; set; }
+        public DbSet<Solicitante> Solicitantes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new EditorialMap());
             modelBuilder.ApplyConfiguration(new LibroMap());
+            modelBuilder.ApplyConfiguration(new PrestamoMap());
+            modelBuilder.ApplyConfiguration(new SolicitanteMap());
         }
     }
 }

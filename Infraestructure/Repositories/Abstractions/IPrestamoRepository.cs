@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Abstractions
 {
-    public interface ILibroRepository : IRepositoryCrud<Libro,int >, IRepositoryPaginated<Libro>
+    public interface IPrestamoRepository: IRepositoryCrud<Prestamo,int>, IRepositoryPaginated<Prestamo>
     {
     }
 }
