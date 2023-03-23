@@ -1,18 +1,16 @@
-﻿using Application.Dtos.Libros;
+﻿using System;
+using Application.Dtos.Libros;
 using Application.Services.Abstractions;
 using AutoMapper;
 using Domain;
 using Infrastructure.Repositories.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utils.Paginations;
 
 namespace Application.Services.Implementations
 {
     public class LibroService : ILibroService
     {
+
         private readonly IMapper _mapper;
         private readonly ILibroRepository _libroRepository;
 
@@ -21,36 +19,51 @@ namespace Application.Services.Implementations
             _mapper = mapper;
             _libroRepository = libroRepository;
         }
+
         public async Task<LibroDto> Create(LibroFormDto dto)
         {
             var entity = _mapper.Map<Libro>(dto);
             var response = await _libroRepository.Create(entity);
+
             return _mapper.Map<LibroDto>(response);
         }
 
         public async Task<LibroDto?> Edit(int id, LibroFormDto dto)
         {
             var entity = _mapper.Map<Libro>(dto);
-            var response = await _libroRepository.Edit(id,entity);
-            return _mapper.Map<LibroDto?>(response);
+            var response = await _libroRepository.Edit(id, entity);
+
+            return _mapper.Map<LibroDto>(response);
         }
 
         public async Task<LibroDto?> EnableOrDisable(int id)
         {
             var response = await _libroRepository.EnableOrDisable(id);
+
             return _mapper.Map<LibroDto>(response);
         }
 
         public async Task<LibroDto?> Find(int id)
         {
             var response = await _libroRepository.Find(id);
+
             return _mapper.Map<LibroDto>(response);
         }
 
         public async Task<IList<LibroDto>> FindAll()
         {
             var response = await _libroRepository.FindAll();
-            return _mapper.Map<IList<LibroDto>> (response);
+
+            return _mapper.Map<IList<LibroDto>>(response);
+        }
+
+        public async Task<ResponsePagination<LibroDto>> PaginatedSearch(RequestPagination<LibroDto> dto)
+        {
+            var entity = _mapper.Map<RequestPagination<Libro>>(dto);
+            var response = await _libroRepository.PaginatedSearch(entity);
+
+            return _mapper.Map<ResponsePagination<LibroDto>>(response);
         }
     }
 }
+

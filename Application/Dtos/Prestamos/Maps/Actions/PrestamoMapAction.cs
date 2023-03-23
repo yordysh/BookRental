@@ -1,15 +1,11 @@
-﻿using Application.Dtos.Solicitantes;
+﻿using System;
+using Application.Dtos.Solicitantes;
 using AutoMapper;
 using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Dtos.Prestamos.Maps.Actions
 {
-    internal class PrestamoMapAction : IMappingAction<Prestamo, PrestamoDto>
+	public class PrestamoMapAction : IMappingAction<Prestamo, PrestamoDto>
     {
         public void Process(Prestamo source, PrestamoDto destination, ResolutionContext context)
         {
@@ -17,3 +13,4 @@ namespace Application.Dtos.Prestamos.Maps.Actions
         }
     }
 }
+

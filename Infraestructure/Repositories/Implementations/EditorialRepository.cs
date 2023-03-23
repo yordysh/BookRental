@@ -1,9 +1,10 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Infrastructure.Context;
-using Infrastructure.Core.Paginations.Abstractions;
 using Infrastructure.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Utils.Paginations;
+using Infrastructure.Core.Paginations.Abstractions;
 
 namespace Infrastructure.Repositories.Implementations
 {
@@ -11,6 +12,7 @@ namespace Infrastructure.Repositories.Implementations
     {
         private readonly ApplicationDbContext _context;
         private readonly IPaginator<Editorial> _paginator;
+
         public EditorialRepository(ApplicationDbContext context, IPaginator<Editorial> paginator)
         {
             _context = context;
@@ -20,6 +22,7 @@ namespace Infrastructure.Repositories.Implementations
         public async Task<Editorial> Create(Editorial entity)
         {
             _context.Editoriales.Add(entity);
+
             await _context.SaveChangesAsync();
 
             return entity;
@@ -36,8 +39,8 @@ namespace Infrastructure.Repositories.Implementations
 
                 _context.Editoriales.Update(model);
                 await _context.SaveChangesAsync();
-
             }
+
             return model;
         }
 
@@ -51,8 +54,8 @@ namespace Infrastructure.Repositories.Implementations
 
                 _context.Editoriales.Update(model);
                 await _context.SaveChangesAsync();
-
             }
+
             return model;
         }
 
@@ -60,24 +63,28 @@ namespace Infrastructure.Repositories.Implementations
         => await _context.Editoriales.FindAsync(id);
 
         public async Task<IList<Editorial>> FindAll()
-       => await _context.Editoriales.OrderByDescending(e => e.Id).ToListAsync();
+        => await _context.Editoriales.OrderByDescending(e => e.Id).ToListAsync();
 
         public async Task<ResponsePagination<Editorial>> PaginatedSearch(RequestPagination<Editorial> entity)
         {
             var filter = entity.Filter;
             var query = _context.Editoriales.AsQueryable();
 
-            if(filter != null)
+            if (filter != null)
             {
-                query = query.Where(e => 
-                (!filter.Estado.HasValue || e.Estado == filter.Estado)
-                &&  (string.IsNullOrWhiteSpace(filter.Codigo) || e.Codigo.ToUpper().Contains(filter.Codigo.ToUpper().Trim()))
-                &&  (string.IsNullOrWhiteSpace(filter.Nombre) || e.Nombre.ToUpper().Contains(filter.Nombre.ToUpper().Trim()))
-                );        
-             }
-            query =query.OrderByDescending(e => e.Id);
+                query = query.Where(e =>
+                    (!filter.Estado.HasValue || e.Estado == filter.Estado)
+                    && (string.IsNullOrWhiteSpace(filter.Codigo) || e.Codigo.ToUpper().Contains(filter.Codigo.ToUpper().Trim()))
+                    && (string.IsNullOrWhiteSpace(filter.Nombre) || e.Nombre.ToUpper().Contains(filter.Nombre.ToUpper().Trim()))
+                );
+            }
+
+            query = query.OrderByDescending(e => e.Id);
+
             var response = await _paginator.Paginate(query, entity);
+
             return response;
         }
     }
 }
+

@@ -1,14 +1,10 @@
-﻿using Application.Dtos.Solicitantes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Application.Dtos.Solicitantes;
 
 namespace Application.Dtos.Prestamos
 {
-    public class PrestamoFormDto
-    {
+	public class PrestamoFormDto
+	{
         public DateTime FechaPrestamo { get; set; }
         public DateTime? FechaDevolucion { get; set; }
         public int? EstadoPrestamo { get; set; }
@@ -16,3 +12,4 @@ namespace Application.Dtos.Prestamos
         public virtual SolicitanteDto Solicitante { get; set; }
     }
 }
+

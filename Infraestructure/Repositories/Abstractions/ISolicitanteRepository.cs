@@ -4,7 +4,7 @@ using Infrastructure.Base;
 
 namespace Infrastructure.Repositories.Abstractions
 {
-	public interface IPrestamoRepository : IRepositoryCrud<Prestamo, int>, IRepositoryPaginated<Prestamo>
+	public interface ISolicitanteRepository : IRepositoryCrud<Solicitante, int>, IRepositoryPaginated<Solicitante>
     {
 	}
 }

@@ -1,11 +1,7 @@
-using Application.Services.Abstractions;
-using Application.Services.Implementations;
-using Infrastructure.Context;
-using Infrastructure.Repositories.Abstractions;
-using Infrastructure.Repositories.Implementations;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using System.Reflection;
+using Infrastructure.Context;
 using Infrastructure.Core.Paginations.Abstractions;
 using Infrastructure.Core.Paginations.Implementations;
 
@@ -24,15 +20,16 @@ builder.Services.Configure<RouteOptions>(options =>
     options.LowercaseQueryStrings = true;
 });
 
-//DataBase context
+// Data base context
 builder.Services.AddDbContext<ApplicationDbContext>();
 
-//DI
+// DI
 // builder.Services.AddScoped<IEditorialRepository, EditorialRepository>();
 
 // builder.Services.AddScoped<IEditorialService, EditorialService>();
 
 // builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddScoped(typeof(IPaginator<>), typeof(Paginator<>));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -51,17 +48,27 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
+
+app.UseCors(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.AllowAnyHeader()
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .Build();
+});
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

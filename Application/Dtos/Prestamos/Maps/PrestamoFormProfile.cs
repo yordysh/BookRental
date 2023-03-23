@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Dtos.Prestamos.Maps.Actions;
+using AutoMapper;
+using Domain;
 
 namespace Application.Dtos.Prestamos.Maps
 {
-    internal class PrestamoFormProfile
+	public class PrestamoFormProfile : Profile
     {
+        public PrestamoFormProfile()
+        {
+            CreateMap<Prestamo, PrestamoFormDto>()
+                .AfterMap<PrestamoFormMapAction>();
+
+            CreateMap<PrestamoFormDto, Prestamo>()
+                .AfterMap<PrestamoFormReverseMapAction>();
+        }
     }
 }
+

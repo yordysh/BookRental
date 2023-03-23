@@ -1,12 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Dtos.Prestamos.Maps.Actions;
+using AutoMapper;
+using Domain;
+using Utils.Paginations;
 
 namespace Application.Dtos.Prestamos.Maps
 {
-    internal class PrestamoProfile
+	public class PrestamoProfile : Profile
     {
+        public PrestamoProfile()
+        {
+            CreateMap<Prestamo, PrestamoDto>()
+                .AfterMap<PrestamoMapAction>();
+
+            CreateMap<PrestamoDto, Prestamo>()
+                .AfterMap<PrestamoReverseMapAction>();
+
+            CreateMap<RequestPagination<PrestamoDto>, RequestPagination<Prestamo>>();
+
+            CreateMap<ResponsePagination<Prestamo>, ResponsePagination<PrestamoDto>>();
+        }
     }
 }

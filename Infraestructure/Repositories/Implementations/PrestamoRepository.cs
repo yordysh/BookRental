@@ -1,13 +1,9 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Infrastructure.Context;
 using Infrastructure.Core.Paginations.Abstractions;
 using Infrastructure.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utils.Paginations;
 
 namespace Infrastructure.Repositories.Implementations
@@ -16,31 +12,37 @@ namespace Infrastructure.Repositories.Implementations
     {
         private readonly ApplicationDbContext _context;
         private readonly IPaginator<Prestamo> _paginator;
+
+
         public PrestamoRepository(ApplicationDbContext context, IPaginator<Prestamo> paginator)
         {
-            _context= context;
-            _paginator= paginator;
+            _context = context;
+            _paginator = paginator;
         }
+
         public async Task<Prestamo> Create(Prestamo entity)
         {
             _context.Prestamos.Add(entity);
             await _context.SaveChangesAsync();
+
             return entity;
         }
 
         public async Task<Prestamo?> Edit(int id, Prestamo entity)
         {
             var model = await _context.Prestamos.FindAsync(id);
+
             if (model != null)
             {
                 model.FechaPrestamo = entity.FechaPrestamo;
                 model.FechaDevolucion = entity.FechaDevolucion;
                 model.EstadoPrestamo = entity.EstadoPrestamo;
-                model.IdSolicitante= entity.IdSolicitante;
+                model.IdSolicitante = entity.IdSolicitante;
 
-                _context.Update(model);
+                _context.Prestamos.Update(model);
                 await _context.SaveChangesAsync();
             }
+
             return model;
         }
 
@@ -60,10 +62,12 @@ namespace Infrastructure.Repositories.Implementations
         }
 
         public async Task<Prestamo?> Find(int id)
-            => await _context.Prestamos.Include(e => e.Solicitante).FirstOrDefaultAsync(e => e.Id == id);
+        => await _context.Prestamos.Include(e => e.Solicitante).FirstOrDefaultAsync(e => e.Id == id);
 
+        //public async Task<IList<Prestamo>> FindAll()
+        //=> await _context.Prestamos.OrderByDescending(e => e.Id).ToListAsync();
         public async Task<IList<Prestamo>> FindAll()
-            => await _context.Prestamos.OrderByDescending(e => e.Id).ToListAsync();
+         => await _context.Prestamos.Include(e => e.Solicitante).OrderByDescending(e => e.Id).ToListAsync();
 
         public async Task<ResponsePagination<Prestamo>> PaginatedSearch(RequestPagination<Prestamo> entity)
         {
@@ -86,3 +90,4 @@ namespace Infrastructure.Repositories.Implementations
         }
     }
 }
+

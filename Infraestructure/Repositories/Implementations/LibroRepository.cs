@@ -1,13 +1,9 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Infrastructure.Context;
 using Infrastructure.Core.Paginations.Abstractions;
 using Infrastructure.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utils.Paginations;
 
 namespace Infrastructure.Repositories.Implementations
@@ -16,6 +12,7 @@ namespace Infrastructure.Repositories.Implementations
     {
         private readonly ApplicationDbContext _context;
         private readonly IPaginator<Libro> _paginator;
+
         public LibroRepository(ApplicationDbContext context, IPaginator<Libro> paginator)
         {
             _context = context;
@@ -32,18 +29,21 @@ namespace Infrastructure.Repositories.Implementations
 
         public async Task<Libro?> Edit(int id, Libro entity)
         {
-          var model = await _context.Libros.FindAsync(id);
-            if(model != null)
+            var model = await _context.Libros.FindAsync(id);
+
+            if (model != null)
             {
                 model.Isbn = entity.Isbn;
                 model.Titulo = entity.Titulo;
-                model.Autores= entity.Autores;
+                model.Autores = entity.Autores;
                 model.Edicion = entity.Edicion;
-                model.Anio= entity.Anio;
+                model.Anio = entity.Anio;
                 model.IdEditorial = entity.IdEditorial;
+
                 _context.Libros.Update(model);
                 await _context.SaveChangesAsync();
             }
+
             return model;
         }
 
@@ -57,16 +57,16 @@ namespace Infrastructure.Repositories.Implementations
 
                 _context.Libros.Update(model);
                 await _context.SaveChangesAsync();
-
             }
+
             return model;
         }
 
         public async Task<Libro?> Find(int id)
-        => await _context.Libros.FindAsync(id);
+        => await _context.Libros.Include(e => e.Editorial).FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task<IList<Libro>> FindAll()
-        => await _context.Libros.ToListAsync();
+        => await _context.Libros.Include(e => e.Editorial).OrderByDescending(e => e.Id).ToListAsync();
 
         public async Task<ResponsePagination<Libro>> PaginatedSearch(RequestPagination<Libro> entity)
         {
@@ -85,9 +85,12 @@ namespace Infrastructure.Repositories.Implementations
                     && (!filter.IdEditorial.HasValue || e.IdEditorial == filter.IdEditorial)
                 );
             }
+
             query = query.OrderByDescending(e => e.Id);
+
             var response = await _paginator.Paginate(query, entity);
             return response;
         }
     }
 }
+

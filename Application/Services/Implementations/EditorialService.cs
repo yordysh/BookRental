@@ -63,5 +63,5 @@ namespace Application.Services.Implementations
             return _mapper.Map<ResponsePagination<EditorialDto>>(response);
         }
     }
-
 }
+

@@ -1,15 +1,11 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.ModelMaps
 {
-    public class PrestamoMap : IEntityTypeConfiguration<Prestamo>
+	public class PrestamoMap : IEntityTypeConfiguration<Prestamo>
     {
         public void Configure(EntityTypeBuilder<Prestamo> builder)
         {
@@ -24,7 +20,7 @@ namespace Infrastructure.ModelMaps
             builder.Property(t => t.Estado).HasColumnName("estado");
 
             builder.HasOne(t => t.Solicitante).WithMany(t => t.Prestamos).HasForeignKey(t => t.IdSolicitante);
-
         }
     }
 }
+
